@@ -5,7 +5,7 @@
 
 @layer base {
   li {
-    @apply p-4 font-bold hover:text-zinc-300
+    @apply p-4 font-bold text-white hover:text-zinc-300
   }
    
 }
