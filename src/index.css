@@ -5,11 +5,9 @@
 
 @layer base {
   li {
-    @apply p-4 font-bold
+    @apply p-4 font-bold hover:text-zinc-300
   }
-   button {
-    @apply p-4 bg-yellow-100 rounded-md border-white text-white hover:bg-transparent hover:text-slate-900 font-bold
-  }
+   
 }
 
 
