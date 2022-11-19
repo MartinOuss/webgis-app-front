@@ -17,14 +17,17 @@ export const Map = () => {
 
    if(layerType === 'polygon'){ 
 
-    const {_leaflet_id , _latlngs } = layer ;
+    const {_leaflet_id} = layer ;
 
     //to fix : after the creation state doesnt change, go learn more about useState!
 
      getPolyCoord((layerData) => [...layerData, {id: _leaflet_id, coordinates : layer.getLatLngs()[0]}]);
     
      console.log(layer);
-     console.log(JSON.stringify(layer.getLatLngs()[0]));
+     console.log(JSON.stringify(layer.getLatLngs()[0].forEach(element => {
+      console.log(element);
+     
+     })));
     
          
     
