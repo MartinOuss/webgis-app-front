@@ -1,14 +1,17 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import {MapContainer, FeatureGroup, TileLayer } from "react-leaflet"
 import {EditControl} from 'react-leaflet-draw'
 
 // import "../src/App.css"
 
 export const Map = () => {
+  
+  const [polygonCoords , getPolyCoords] = useState([]);
+  const [polygonData , getPolyData]  = useState([]);
 
-  const [polygonllatlng , getPolyCoord]  = useState([]);
 
+ 
   
   const _onCreate = e =>{
     console.log(e)
@@ -21,19 +24,29 @@ export const Map = () => {
 
     //to fix : after the creation state doesnt change, go learn more about useState!
 
-     getPolyCoord((layerData) => [...layerData, {id: _leaflet_id, coordinates : layer.getLatLngs()[0]}]);
+    //  getPolyData((layerData) => [...layerData, {id: _leaflet_id, coordinates : layer.getLatLngs()[0]}]);
     
-     console.log(layer);
-     console.log(JSON.stringify(layer.getLatLngs()[0].forEach(element => {
-      console.log(element);
      
-     })));
+
+     layer.getLatLngs()[0].forEach(element => {
+      
+      const coordLatLng = Object.values(element);
+      
+      // this line is for reversing lat and lng to be compatible with GeoJson format
+      const coordLngLat = coordLatLng.reverse();
+      console.log(coordLngLat);
+      getPolyCoords((coordsArr)=>[... coordsArr , coordLngLat]);
+
+     });
     
-         
-    
+
+     getPolyData((layerData) => [...layerData, {id: _leaflet_id, coordinates :[]}]);
+  
+
+ 
    }
 
-  //  console.log(JSON.stringify(polygonllatlng, 0, 2));
+   
 
   };
 
@@ -68,6 +81,11 @@ export const Map = () => {
     
   </FeatureGroup>
 </MapContainer>
+<div>
+{JSON.stringify(polygonData, 0, 2)}
+{JSON.stringify(polygonCoords, 0, 2)}
+
+</div>
     </div>
   )
 }
