@@ -7,18 +7,26 @@ import {EditControl} from 'react-leaflet-draw'
 
 export const Map = () => {
   
-  const [polygonCoords , getPolyCoords] = useState([{
-    id : "",
-    geometry:{type:"" , coordinates : []},
-    parcelName : "",
-    ownerName : ""
+  const [parcelCoords , getPolyCoords] = useState([]);
+  const [parcelName , setParcelName] = useState('');
+  const [ownerName , setOwnerName] = useState('');
 
-  }]);
- 
+  const handlePNChange = (e) => {setParcelName(e.target.value)};
+  const handleOwChange = (e) => {setOwnerName(e.target.value)}
+  const onCreate = (newParcel) => {console.log(newParcel)};
 
-
- 
+  const handleSubmit = (e) => {
+    // 'in order not to submit data to another page'
+    e.preventDefault()
+    //  this alert still doesnt work ..........................................................?????
   
+      onCreate(`${parcelName , ownerName , parcelCoords}`);
+    
+      setParcelName ('parcelName');
+      setOwnerName ('ownerName');
+    };
+
+ 
   const _onCreate = e =>{
     console.log(e)
 
@@ -39,12 +47,8 @@ export const Map = () => {
       
       // this line is for reversing lat and lng to be compatible with GeoJson format
       const coordLngLat = coordLatLng.reverse();
-      console.log(coordLngLat);
-
       coords.push(coordLngLat);
 
-      console.log(coords);
-    
      });
 
      getPolyCoords((coordsArr)=>[... coordsArr ,{id : _leaflet_id, geometry:{type: layerType , coordinates : coords}}]);
@@ -104,7 +108,7 @@ export const Map = () => {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Owner Name"
+                placeholder="Owner Name" onChange={handleOwChange}
               />
             </div>
             <div className="form-group mb-6">
@@ -124,7 +128,7 @@ export const Map = () => {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Parcel Name"
+                placeholder="Parcel Name"  onChange = {handlePNChange}
               />
             </div>
             <div className="form-group form-check text-center mb-6">
@@ -160,13 +164,16 @@ export const Map = () => {
       transition
       duration-150
       ease-in-out"
-            >
+           onSubmit={handleSubmit} >
               Save
             </button>
           </form>
         </div>
 
-        {JSON.stringify(polygonCoords)}
+        {JSON.stringify(parcelCoords , parcelName , ownerName)}
+        {JSON.stringify(parcelName)}
+        {JSON.stringify(ownerName)}
+
       </div>
     </div>
   );
