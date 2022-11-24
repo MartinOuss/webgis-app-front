@@ -1,12 +1,24 @@
 import React from 'react'
 import { useState , useEffect} from 'react'
-import {MapContainer, FeatureGroup, TileLayer } from "react-leaflet"
+import { GeoJSON, MapContainer, FeatureGroup, TileLayer } from "react-leaflet"
+import {onEachFeature} from 'leaflet'
+import parcelGeoJSON from '../Assets/ParcelsJson.json'
+
 // leaflet Draw :
 // import {EditControl} from 'react-leaflet-draw'
 
 // import "../src/App.css"
 
 export const Map = () => {
+
+let parcelStyle ={
+  "color": "#02f537",
+  "weight": 4,
+  "opacity": 0.5
+}
+
+
+
 
 
   // for leaflet draw ..............................................................................
@@ -75,13 +87,43 @@ export const Map = () => {
   //.........................................................................................
   return (
     <div className="h-[400px]  w-full md:w-[1400px] border border-black mr-1 text-center">
-      <MapContainer className="min-h-full" center={[51.505, -0.09]} zoom={13}>
+      <MapContainer className="min-h-full" center={[31.891004334924361, -4.347125514847765]} zoom={16}>
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution=''
+          url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+          subdomains= {['mt0', 'mt1', 'mt2', 'mt3']}
+          maxZoom= {21}
         />
-        <FeatureGroup>
 
+        {/* {parcelGeoJSON.map(parcel=>{ 
+        <Polygon key= {parcel.features.prpoeties.id} position = {parcel.features.geometry}>
+
+        </Polygon>
+      })} */}
+
+     
+
+<GeoJSON pathOptions={parcelStyle} 
+
+    data = {parcelGeoJSON} onEachFeature = { function onEachFeature(feature, layer){
+     
+      let label = JSON.stringify(layer.feature.properties.owner_name);
+      console.log('names ? done')
+      layer.bindTooltip(label, {permanent: true, direction: "center",className: "my-labels", opacity: 0.7}).openTooltip();
+    
+  }}/>
+
+      {/* <GeoJSON pathOptions={parcelStyle} eventHandlers={{
+    click: function onEachFeature(feature, layer){
+     console.log(layer.feature.properties.id);
+  }
+  }} data = {parcelGeoJSON}/> */}
+
+
+      
+
+
+        <FeatureGroup>
           {/* for leaflet-Draw ........................... */}
           {/* <EditControl
             position="topright"
