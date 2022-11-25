@@ -106,20 +106,22 @@ let parcelStyle ={
 <GeoJSON pathOptions={parcelStyle} 
 
     data = {parcelGeoJSON} onEachFeature = { function onEachFeature(feature, layer){
-     
       let label = JSON.stringify(layer.feature.properties.owner_name);
-      console.log('names ? done')
-      layer.bindTooltip(label, {permanent: true, direction: "center",className: "my-labels", opacity: 0.7}).openTooltip();
+
+     if( layer.feature.properties.owner_name !== null)     {console.log(layer.feature.properties.owner_name);
+            layer.bindTooltip(label, {permanent: true, direction: "center",className: "my-labels", opacity: 0.7}).openTooltip();
+            parcelStyle = {
+              color: "#b1bdb4",
+              weight: 4,
+              opacity: 0.5,
+            };
+          }else{
+              console.log('la');
+            } 
     
   }}/>
 
-      {/* <GeoJSON pathOptions={parcelStyle} eventHandlers={{
-    click: function onEachFeature(feature, layer){
-     console.log(layer.feature.properties.id);
-  }
-  }} data = {parcelGeoJSON}/> */}
-
-
+     
       
 
 
