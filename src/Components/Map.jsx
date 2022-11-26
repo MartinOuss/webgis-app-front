@@ -1,15 +1,15 @@
 import React from 'react'
 import { useState , useEffect} from 'react'
 import { GeoJSON, MapContainer, FeatureGroup, TileLayer } from "react-leaflet"
-import {onEachFeature} from 'leaflet'
-import parcelGeoJSON from '../Assets/ParcelsJson.json'
+
+
 
 // leaflet Draw :
 // import {EditControl} from 'react-leaflet-draw'
 
 // import "../src/App.css"
 
-export const Map = () => {
+export const Map = (props) => {
 
 let parcelStyle ={
   "color": "#02f537",
@@ -95,17 +95,11 @@ let parcelStyle ={
           maxZoom= {21}
         />
 
-        {/* {parcelGeoJSON.map(parcel=>{ 
-        <Polygon key= {parcel.features.prpoeties.id} position = {parcel.features.geometry}>
-
-        </Polygon>
-      })} */}
-
-     
+          
 
 <GeoJSON pathOptions={parcelStyle} 
 
-    data = {parcelGeoJSON} onEachFeature = { function onEachFeature(feature, layer){
+    data = {props.mapParcels} onEachFeature = { function onEachFeature(feature, layer){
       let label = JSON.stringify(layer.feature.properties.owner_name);
 
      if( layer.feature.properties.owner_name !== null)     {console.log(layer.feature.properties.owner_name);

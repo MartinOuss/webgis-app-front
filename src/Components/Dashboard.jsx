@@ -2,17 +2,22 @@ import React from 'react'
 import {Map} from '../Components/Map'
 import { DTable } from './DTable'
 import { SetIrriParamsForm } from './SetIrriParamsForm'
+import parcelGeoJSON from '../Assets/ParcelsJson.json'
 
 
-export const Dashboard = () => {
+
+export const Dashboard = (props) => {
+  const parcels = parcelGeoJSON.features ;
+  const mapParcels = parcelGeoJSON;
+
  return (
     <div className='w-full  p-2 bg-slate-100 flex flex-col md:flex-row ' > 
      
         <Map />
     
-        <DTable/>
+        <DTable parcels ={parcels}/>
 
-        <SetIrriParamsForm/>
+        <SetIrriParamsForm mapParcels ={mapParcels}/>
      
     </div>
   )
