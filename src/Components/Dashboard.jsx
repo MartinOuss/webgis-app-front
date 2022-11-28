@@ -13,11 +13,11 @@ export const Dashboard = (props) => {
  return (
     <div className='w-full  p-2 bg-slate-100 flex flex-col md:flex-row ' > 
      
-        <Map />
+        <Map mapParcels ={mapParcels}/>
     
         <DTable parcels ={parcels}/>
 
-        <SetIrriParamsForm mapParcels ={mapParcels}/>
+        <SetIrriParamsForm />
      
     </div>
   )
