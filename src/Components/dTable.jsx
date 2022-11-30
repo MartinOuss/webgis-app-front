@@ -10,8 +10,6 @@ import { useState } from 'react'
 export const DTable = ({parcels}) => {
 
  
-
- 
   return (
     <div className=' overflow-auto max-h-[400px] md:w-full flex justify-center mr-1 text-center p-2'>
       
@@ -27,11 +25,11 @@ export const DTable = ({parcels}) => {
                         </tr>
                     </thead>
                     <tbody className ='p-1'>
-                      {parcels.map(parcel =>{
+                      {parcels.filter((parcel)=> parcel.parcel_id !=="").map((parcel,index) =>{
 
                         return (  
                           
-                          <Parcel key = {parcel.properties.id} parcel = {parcel}/>
+                          <Parcel key = {index} parcel = {parcel}/>
                      
                       )}
                       )}
