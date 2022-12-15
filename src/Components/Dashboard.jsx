@@ -10,24 +10,25 @@ import moment from 'moment'
 
 
 export const Dashboard = (props) => {
-  // const parcels = parcelGeoJSON.features ;
-  const [parcels , getParcels]= useState([{parcel_id :"" , parcel_owner :"", Irri_date:"" , Irri_dur:""}])
-  const date = moment("12-25-1995", "MM-DD-YYYY");
-  console.log(parcels.length)
-  const Ids_length =  parcelGeoJSON.features.filter((parcel)=> parcel.properties.owner_name && parcel.properties.node_num !== null).length;
+
+  
+  // const [parcels , getParcels]= useState([{parcel_id :"" , parcel_owner :"", Irri_date:"" , Irri_dur:""}])
+ 
+  // console.log(parcels.length)
+  // const Ids_length =  parcelGeoJSON.features.filter((parcel)=> parcel.properties.owner_name && parcel.properties.node_num !== null).length;
 
 
   
-  if(parcels.length <= Ids_length ){
+  // if(parcels.length <= Ids_length ){
      
-  parcelGeoJSON.features.filter(parcel => parcel.properties.owner_name && parcel.properties.node_num !== null).forEach(parcel => {
-      getParcels((data) => [...data, { parcel_id: parcel.properties.id, parcel_owner: parcel.properties.owner_name, Irri_date: date , Irri_dur: Math.round(parcel.properties.IrriDur) }])
+  // parcelGeoJSON.features.filter(parcel => parcel.properties.owner_name && parcel.properties.node_num !== null).forEach(parcel => {
+  //     getParcels((data) => [...data, { parcel_id: parcel.properties.id, parcel_owner: parcel.properties.owner_name, Irri_date: date , Irri_dur: Math.round(parcel.properties.IrriDur) }])
 
-    })
-  }
+  //   })
+  // }
   
 
-    console.log(parcels)
+  //   console.log(parcels)
   
   const mapParcels = parcelGeoJSON;
 
@@ -36,8 +37,11 @@ export const Dashboard = (props) => {
      
         <Map mapParcels ={mapParcels}/>
     
-        <DTable parcels ={parcels} />
-
+        <DTable />
+        
+      
+        
+        
         <SetIrriParamsForm />
      
     </div>
