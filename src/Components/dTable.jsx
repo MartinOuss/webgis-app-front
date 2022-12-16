@@ -10,36 +10,40 @@ import parcelGeoJSON from '../Assets/ParcelsJson.json'
 export const DTable = () => {
 
 
-  const [data, setData] = useState(parcelGeoJSON.features);
-  const prevData = useRef(data);  
 
-  // Use the useEffect hook to sort the data according to the desired criteria
-  useEffect(() => {
-    
+  const data = parcelGeoJSON.features;
+  const [sortedData, setSortedData] = useState([]);
+  const [dates , setDates] = useState([])
+  
+  useEffect( () => {
     // Sort the data by irrigation duration
     const sortedData = data.filter((parcel)=> parcel.properties.owner_name && parcel.properties.node_num !== null).sort((a, b) => a.properties.node_num - b.properties.node_num);
-
-    console.log(sortedData)
-
+   
     // Update the state variable with the sorted data
-    setData(sortedData);
+    setSortedData(sortedData);
+  }, [data]);
 
-    prevData.current = sortedData;
+  useEffect(() => {
+    
+      let initialDate = new Date("2022-12-15 10:00");
+
+      for (let i = 0; i < sortedData.length; i++) {
+        const parcel = sortedData[i];
+        const currentDate = new Date(initialDate);
+        currentDate.setMinutes(currentDate.getMinutes() + Math.round(parcel.properties.IrriDur));
+      
+        setDates((data) => [...data,{ id: parcel.properties.id, rendezVous: currentDate }]);
+        // Update initial date and time for next iteration
+        initialDate = currentDate;
+      }
+   
 
     
-  }, [prevData]);
+  }, [sortedData]);
+  console.log(dates)
 
-  // Use the initial date and the irrigation duration for each parcel to calculate the rendezvous time
-  let currentDate = new Date();
-  let rendezvousTimes = data.map((parcel) => {
-    currentDate.setMinutes(currentDate.getMinutes() + Math.round(parcel.properties.IrriDur));
-    return currentDate;
-
-  })
 
   
-  console.log(data)
- 
   return (
     <div className=" overflow-auto max-h-[400px] md:w-full flex justify-center mr-1 text-center p-2">
       <table className=" table-fixed border-collapse border-spacing-2 border border-slate-500  w-full">
@@ -53,12 +57,13 @@ export const DTable = () => {
         </thead>
         <tbody className="p-1">
          
-          {data.map((parcel, i) =>  (
+          {sortedData.map((parcel, i) =>  (
             <tr key={i}>
+              <td>{parcel.properties.id}</td>
               <td>{parcel.properties.owner_name}</td>
               <td>{parcel.properties.node_num}</td>
-              <td>{parcel.properties.IrriDur}</td>
-              <td>{rendezvousTimes[i].toString()}</td>
+              <td>{Math.round(parcel.properties.IrriDur)}</td>
+              <td>{dates[i].rendezVous.toString()}</td>
             </tr>
           ))}
         </tbody>
