@@ -18,7 +18,7 @@ const [startDate, setStartDate] = useState(new Date());
    
 
     <button className="" >
-      {/* <i className="fas fa-calendar datepicker-toggle-icon"> <BsFillCalendarCheckFill/></i> */}
+  
     </button>
   </div>
 </div>

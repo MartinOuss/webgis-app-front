@@ -6,7 +6,7 @@ import parcelGeoJSON from '../Assets/ParcelsJson.json'
 
 export const Parcel = () => {
 
-   // Import the JSON data and store it in a state variable
+  
  
 
 
