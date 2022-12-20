@@ -1,9 +1,8 @@
 import React from 'react'
-import Moment from 'react-moment'
-import moment from 'moment'
-import { Parcel } from './Parcel'
-import { useState, useEffect, useRef } from 'react'
+// import { Parcel } from './Parcel'
+import { useState, useEffect} from 'react'
 import parcelGeoJSON from '../Assets/ParcelsJson.json'
+import { SetIrriParamsForm } from './SetIrriParamsForm'
 
 
 
@@ -13,11 +12,14 @@ export const DTable = () => {
 
   const data = parcelGeoJSON.features;
   const [sortedData, setSortedData] = useState([]);
-  const [dates , setDates] = useState([])
-  let newDates = [];
+  const [dates , setDates] = useState([]);
+  // state to store connexion point options 
+  const [CPOptions, setCPOptions] = useState([])
+  
 
 
   useEffect( () => {
+    
     // Sort the data by node number and node rank 
     const sortedData = data
       .filter(
@@ -34,11 +36,28 @@ export const DTable = () => {
    
     // Update the state variable with the sorted data
     setSortedData(sortedData);
+
+   
+    
   }, [data]);
 
+  useEffect(() => {
+    let optionSet = new Set();
+      
+    sortedData.forEach(item => optionSet.add(item.properties.node_num));
+    
+  
+    if (CPOptions.length === 0) {
+      setCPOptions(Array.from(optionSet));
+    }
+  }, [sortedData, CPOptions]);
+
+  
   
   useEffect(() => {
     let initialDate = new Date("2022-12-15 10:00");
+    let newDates = [];
+
   
     function calculateDates() {
       
@@ -64,8 +83,9 @@ export const DTable = () => {
     setDates(newDates);
   }, [sortedData]);
 
-  console.log(dates)
-  console.log(sortedData)
+  console.log({sortedData :sortedData})
+  console.log({dates : dates})
+  console.log({ConnexionPoints : CPOptions })
   
   
   return (
@@ -94,6 +114,8 @@ export const DTable = () => {
           ))}
         </tbody>
       </table>
+
+      <SetIrriParamsForm CPOptions={CPOptions} />
     </div>
   );
 }
