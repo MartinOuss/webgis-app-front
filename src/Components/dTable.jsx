@@ -6,7 +6,7 @@ import { SetIrriParamsForm } from './SetIrriParamsForm'
 
 
 
-export const DTable = () => {
+export const DTable = (props) => {
 
 
 
@@ -15,6 +15,7 @@ export const DTable = () => {
   const [dates , setDates] = useState([]);
   // state to store connexion point options 
   const [CPOptions, setCPOptions] = useState([])
+  const [schedule , setschedule]= useState([])
   
 
 
@@ -83,13 +84,23 @@ export const DTable = () => {
     setDates(newDates);
   }, [sortedData]);
 
+  
+
   console.log({sortedData :sortedData})
   console.log({dates : dates})
   console.log({ConnexionPoints : CPOptions })
-  
+  console.log({schedule: schedule})
+
+
+  const calculateSchedule = (startDate, endDate, selectedOptions) => {
+     setschedule((item)=>[...item, {start:startDate, end : endDate , selectedCP : selectedOptions}])
+    console.log({startDate,endDate,selectedOptions})
+       
+    };
   
   return (
-    <div className=" overflow-auto max-h-[400px] md:w-full flex justify-center mr-1 text-center p-2">
+    <div className='flex justify-center max-h-[400px] md:w-full'>
+    <div className="overflow-auto   mr-1 text-center p-2">
       <table className=" table-fixed border-collapse border-spacing-2 border border-slate-500  w-full">
         <thead className="sticky top-0 bg-slate-500 text-white h-1">
           <tr>
@@ -114,8 +125,9 @@ export const DTable = () => {
           ))}
         </tbody>
       </table>
+      </div>
 
-      <SetIrriParamsForm CPOptions={CPOptions} />
+      <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />
     </div>
   );
 }

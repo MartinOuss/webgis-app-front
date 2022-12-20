@@ -2,12 +2,17 @@ import React from 'react'
 import { useState } from 'react';
 
 
-export const SetIrriParamsForm = ({ CPoptions, onSubmit, onFormSubmitted }) => {
+export const SetIrriParamsForm = ({ CPOptions, onSubmit }) => {
 
- 
     const [startDateTime, setStartDateTime] = useState('');
     const [endDateTime, setEndDateTime] = useState('');
-    const [options, setOptions] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+    console.log(selectedOptions);
+    console.log(startDateTime);
+    console.log(endDateTime);
+
+
   
     const handleStartDateTimeChange = (event) => {
       setStartDateTime(event.target.value);
@@ -18,14 +23,18 @@ export const SetIrriParamsForm = ({ CPoptions, onSubmit, onFormSubmitted }) => {
     };
   
     const handleOptionChange = (event) => {
-      const options = [...event.target.options].filter((option) => option.selected).map((option) => option.value);
-      setOptions(options);
+      const option = event.target.value;
+      if (selectedOptions.includes(option)) {
+        setSelectedOptions(selectedOptions.filter((o) => o !== option));
+      } else {
+        setSelectedOptions([...selectedOptions, option]);
+      }
     };
   
     const handleSubmit = (event) => {
       event.preventDefault();
-      onSubmit(startDateTime, endDateTime, options);
-      onFormSubmitted();
+      onSubmit(startDateTime, endDateTime, selectedOptions);
+     
     };
   
     return (
@@ -42,17 +51,29 @@ export const SetIrriParamsForm = ({ CPoptions, onSubmit, onFormSubmitted }) => {
         <br />
         <label className="block font-bold mb-2 text-gray-700">
           Options:
-          <select className="form-select mt-1 block w-full" multiple value={options} onChange={handleOptionChange}>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-          </select>
         </label>
-        <br />
+        <div className="block h-full w-full font-bold mb-2 text-gray-700 overflow-scroll">
+        {CPOptions.map((option) => (
+          <label key={option} >
+            <input
+              type="checkbox"
+              value={option}
+             checked={selectedOptions.includes(option)}
+           onChange={handleOptionChange}
+         />
+  Connexion point:  {option}
+  <br/>
+  </label>
+  ))}
+
+        </div>
+       
+  <br />
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" type="submit">
-          Submit
-        </button>
-      </form>
+        Submit
+      </button>
+    </form>
+
     );
   };
    
