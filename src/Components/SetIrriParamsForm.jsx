@@ -50,9 +50,9 @@ export const SetIrriParamsForm = ({ CPOptions, onSubmit }) => {
         </label>
         <br />
         <label className="block font-bold mb-2 text-gray-700">
-          Options:
+        Select Connexion points:
         </label>
-        <div className="block h-full w-full font-bold mb-2 text-gray-700 overflow-scroll">
+        <div className="block  w-full font-bold mb-2 text-gray-700 overflow-scroll">
         {CPOptions.map((option) => (
           <label key={option} >
             <input
@@ -61,7 +61,7 @@ export const SetIrriParamsForm = ({ CPOptions, onSubmit }) => {
              checked={selectedOptions.includes(option)}
            onChange={handleOptionChange}
          />
-  Connexion point:  {option}
+    C.P-{option}
   <br/>
   </label>
   ))}
