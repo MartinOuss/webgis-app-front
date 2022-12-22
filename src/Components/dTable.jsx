@@ -1,102 +1,11 @@
 import React from 'react'
-// import { Parcel } from './Parcel'
-import { useState, useEffect} from 'react'
-import parcelGeoJSON from '../Assets/ParcelsJson.json'
-import { SetIrriParamsForm } from './SetIrriParamsForm'
 
 
 
-export const DTable = (props) => {
 
 
+export const DTable = ({sortedData,dates}) => {
 
-  const data = parcelGeoJSON.features;
-  const [sortedData, setSortedData] = useState([]);
-  const [dates , setDates] = useState([]);
-  // state to store connexion point options 
-  const [CPOptions, setCPOptions] = useState([])
-  const [schedule , setschedule]= useState([])
-  
-
-
-  useEffect( () => {
-    
-    // Sort the data by node number and node rank 
-    const sortedData = data
-      .filter(
-        (parcel) =>
-          parcel.properties.owner_name && parcel.properties.node_num !== null
-      )
-      .sort((a, b) => {
-        if (a.properties.node_rank !== b.properties.node_rank) {
-          return a.properties.node_rank < b.properties.node_rank ? -1 : 1;
-        } else {
-          return a.properties.node_num - b.properties.node_num;
-        }
-      });
-   
-    // Update the state variable with the sorted data
-    setSortedData(sortedData);
-
-   
-    
-  }, [data]);
-
-  useEffect(() => {
-    let optionSet = new Set();
-      
-    sortedData.forEach(item => optionSet.add(item.properties.node_num));
-    
-  
-    if (CPOptions.length === 0) {
-      setCPOptions(Array.from(optionSet));
-    }
-  }, [sortedData, CPOptions]);
-
-  
-  
-  useEffect(() => {
-    let initialDate = new Date("2022-12-15 10:00");
-    let newDates = [];
-
-  
-    function calculateDates() {
-      
-      for (let i = 0; i < sortedData.length; i++) {
-        const prevParcel = sortedData[i-1];
-        const currentParcel = sortedData[i];
-  
-        if (i === 0) {
-          newDates.push({ id: currentParcel.properties.id, rendezVous: initialDate });
-        } else  {
-        const currentDate = new Date(initialDate);
-          let minToAdd = Math.round(prevParcel?.properties?.IrriDur);
-          currentDate.setMinutes(currentDate.getMinutes() + minToAdd);
-          newDates.push({ id: currentParcel.properties.id, rendezVous: currentDate });
-          initialDate = currentDate;
-
-        }
-  
-         }
-    }
-  
-    calculateDates();
-    setDates(newDates);
-  }, [sortedData]);
-
-  
-
-  console.log({sortedData :sortedData})
-  console.log({dates : dates})
-  console.log({ConnexionPoints : CPOptions })
-  console.log({schedule: schedule})
-
-
-  const calculateSchedule = (startDate, endDate, selectedOptions) => {
-     setschedule((item)=>[...item, {start:startDate, end : endDate , selectedCP : selectedOptions}])
-    console.log({startDate,endDate,selectedOptions})
-       
-    };
   
   return (
     <div className='flex justify-center max-h-[400px] md:w-full'>
@@ -127,7 +36,6 @@ export const DTable = (props) => {
       </table>
       </div>
 
-      <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />
     </div>
   );
 }
