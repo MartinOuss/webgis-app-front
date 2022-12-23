@@ -10,24 +10,20 @@ import { useState, useEffect } from 'react'
 
 export const Dashboard = (props) => {
 
-  
-  const mapParcels = parcelGeoJSON;
   const data = parcelGeoJSON.features;
+  const [mapParcels, setMapParcels] = useState(parcelGeoJSON);
   const [sortedData, setSortedData] = useState([]);
   const [dates , setDates] = useState([]);
   // state to store connexion point options 
   const [CPOptions, setCPOptions] = useState([]);
   // state to store start and end datetime from the form
-  const [schedule , setschedule]= useState([{start:"", end : ""}]);
+  const [schedule , setschedule]= useState([]);
   const [selectedCP, setSelectedCP] = useState([]);
-
   
   
   useEffect( () => {
 
-    if(schedule.length>0){
-
-      
+    if(schedule.length>0){      
     
     // Sort the data by node number and node rank 
     const sortedData = data
@@ -48,6 +44,16 @@ export const Dashboard = (props) => {
 
     }
   }, [data ,schedule,selectedCP]);
+
+  useEffect(() => {
+   
+    // Update the mapParcels object when the sortedData array changes
+    const updatedMapParcels = {
+      ...mapParcels,
+      features: sortedData,
+    };
+    setMapParcels(updatedMapParcels);
+  }, [sortedData]);
 
  
   useEffect(() => {
@@ -75,12 +81,16 @@ export const Dashboard = (props) => {
 
   
   
-  useEffect(() => {
-    
+  useEffect(() => {    
 
-     
-      let initialDate = new Date(schedule[1].start);
-    
+   
+   let initialDate = new Date();
+
+if (schedule.length > 0) {
+  const { start } = schedule[0];
+  initialDate = new Date(start);
+}
+      
 
     let newDates = [];
 
@@ -108,6 +118,8 @@ export const Dashboard = (props) => {
 
     calculateDates();
     setDates(newDates);
+  
+
  
   }, [sortedData, schedule]);
 
@@ -124,6 +136,9 @@ export const Dashboard = (props) => {
   console.log({dates : dates})
   console.log({ConnexionPoints : CPOptions })
   console.log({schedule: schedule})
+  console.log({newParcels: mapParcels})
+
+  
  
 
   
@@ -132,7 +147,7 @@ export const Dashboard = (props) => {
  return (
     <div className='w-full  p-2 bg-slate-100 flex flex-col md:flex-row ' > 
      
-        <Map mapParcels ={mapParcels}/>
+        <Map sortedData ={sortedData} mapParcels ={mapParcels} selectedCP ={selectedCP}/>
     
         <DTable sortedData ={sortedData} dates ={dates} />
 

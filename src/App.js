@@ -5,10 +5,9 @@ import {Dashboard} from './Components/Dashboard'
 function App() {
   return (
     <div className="App">
-      <Navbar> </Navbar>
+      <Navbar className="z-1000"> </Navbar>
       <Dashboard/>
       
-   
     </div>
   );
 }

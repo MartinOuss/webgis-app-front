@@ -1,6 +1,7 @@
 import React from 'react'
-import { useState , useEffect} from 'react'
-import { GeoJSON, MapContainer, FeatureGroup, TileLayer } from "react-leaflet"
+import { useRef} from 'react'
+import { GeoJSON, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
+import L, {bounds } from 'leaflet';
 
 
 
@@ -11,11 +12,53 @@ import { GeoJSON, MapContainer, FeatureGroup, TileLayer } from "react-leaflet"
 
 export const Map = (props) => {
 
-let parcelStyle ={
-  "color": "#02f537",
-  "weight": 4,
-  "opacity": 0.5
+  let center;
+  let zoom;
+  const mapRef = useRef(null);
+
+
+  const selectedParcels = props.sortedData.filter(parcel => props.selectedCP.includes(parcel.properties.node_num))
+
+  if (selectedParcels.length > 0) {
+  const bounds = selectedParcels.reduce((bounds, parcel) => bounds.extend(parcel.geometry.coordinates), new L.LatLngBounds())
+  // mapRef.current.leafletElement.fitBounds(bounds)
+  center = bounds.getCenter()
+  zoom = 16
+} else {
+  // Set default bounds or do something else if there are no selected parcels
+ bounds = new L.LatLngBounds([[
+  31.891004334924361,
+  -4.347125514847765
+    
+],
+[
+  31.891088122667401,
+  -4.346896314194789
+   
+]]);
 }
+
+ 
+ 
+  
+  // Calculate the center and zoom level based on the bounds
+ 
+
+  const customStyle = (feature) => {
+    if (props.selectedCP.includes(feature.properties.node_num) ) {
+      return {
+        color: '#02f537',
+        weight: 4,
+        opacity: 0.5
+      }
+    } else {
+      return {
+        color: '#000000',
+        weight: 2,
+        opacity: 0.8
+      }
+    }
+  }
 
 
 
@@ -87,7 +130,7 @@ let parcelStyle ={
   //.........................................................................................
   return (
     <div className="h-[400px]  w-full md:w-[1400px] border border-black mr-1 text-center">
-      <MapContainer className="min-h-full" center={[31.891004334924361, -4.347125514847765]} zoom={16}>
+      <MapContainer className="min-h-full" center={center} zoom={zoom} ref={mapRef} bounds={bounds} >
         <TileLayer
           attribution=''
           url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
@@ -97,23 +140,38 @@ let parcelStyle ={
 
           
 
-<GeoJSON pathOptions={parcelStyle} 
+<GeoJSON pathOptions={customStyle} 
 
-    data = {props.mapParcels} onEachFeature = { function onEachFeature(feature, layer){
-      let label = JSON.stringify(layer.feature.properties.owner_name);
+    data = {props.mapParcels} 
+    // onEachFeature = { function onEachFeature(feature, layer){
+      
+    //   let label = JSON.stringify(layer.feature.properties.owner_name);
 
-     if( layer.feature.properties.owner_name !== null)     {console.log(layer.feature.properties.owner_name);
-            layer.bindTooltip(label, {permanent: true, direction: "center",className: "my-labels", opacity: 0.7}).openTooltip();
-            parcelStyle = {
-              color: "#b1bdb4",
-              weight: 4,
-              opacity: 0.5,
-            };
-          }else{
-              console.log('la');
-            } 
+    //  if( props.selectedCP.includes(feature.properties.node_num) ) {
+    //         layer.bindTooltip(label, {permanent: true, direction: "center",className: "my-labels", opacity: 0.7}).openTooltip();
+            
+    //       }
     
-  }}/>
+  // }
+// }
+onEachFeature={function onEachFeature(feature, layer) {
+  let label = JSON.stringify(layer.feature.properties.owner_name);
+  
+    layer.bindTooltip(label, {
+      permanent: false,
+      direction: "center",
+      className: "my-labels",
+      opacity: 0.7
+    });
+    layer.on("mouseover", function(e) {
+      this.openTooltip();
+    });
+    layer.on("mouseout", function(e) {
+      this.closeTooltip();
+    });
+  }
+}
+/>
 
      
       
