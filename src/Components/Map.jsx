@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRef} from 'react'
 import { GeoJSON, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
-import L, {bounds } from 'leaflet';
+import L, {bounds} from 'leaflet';
 
 
 
@@ -20,20 +20,29 @@ export const Map = (props) => {
   const selectedParcels = props.sortedData.filter(parcel => props.selectedCP.includes(parcel.properties.node_num))
 
   if (selectedParcels.length > 0) {
+
+    // get initial value of bounds coordinates but it will be reversed because we got them from a geojson
   const bounds = selectedParcels.reduce((bounds, parcel) => bounds.extend(parcel.geometry.coordinates), new L.LatLngBounds())
-  // mapRef.current.leafletElement.fitBounds(bounds)
-  center = bounds.getCenter()
-  zoom = 16
+  // get the real bounds by reversing the initial value 
+ let corner1 = L.latLng(bounds._northEast.lng, bounds._northEast.lat);
+ let corner2 = L.latLng(bounds._southWest.lng, bounds._southWest.lat);
+ let  revBounds = L.latLngBounds(corner1, corner2) ;
+//  fit the map to the bounds we got
+  mapRef.current.fitBounds(revBounds);
+  
+  center = revBounds.getCenter();
+  zoom = 16;
+  console.log({center , bounds, revBounds})
 } else {
-  // Set default bounds or do something else if there are no selected parcels
  bounds = new L.LatLngBounds([[
   31.891004334924361,
   -4.347125514847765
     
 ],
 [
-  31.891088122667401,
-  -4.346896314194789
+  31.889757342824993,
+  -4.34455274420302
+                                
    
 ]]);
 }
@@ -130,7 +139,7 @@ export const Map = (props) => {
   //.........................................................................................
   return (
     <div className="h-[400px]  w-full md:w-[1400px] border border-black mr-1 text-center">
-      <MapContainer className="min-h-full" center={center} zoom={zoom} ref={mapRef} bounds={bounds} >
+      <MapContainer className="min-h-full" center={center} zoom={zoom} ref={mapRef} bounds={bounds} scrollWheelZoom={false} >
         <TileLayer
           attribution=''
           url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
@@ -143,24 +152,13 @@ export const Map = (props) => {
 <GeoJSON pathOptions={customStyle} 
 
     data = {props.mapParcels} 
-    // onEachFeature = { function onEachFeature(feature, layer){
-      
-    //   let label = JSON.stringify(layer.feature.properties.owner_name);
-
-    //  if( props.selectedCP.includes(feature.properties.node_num) ) {
-    //         layer.bindTooltip(label, {permanent: true, direction: "center",className: "my-labels", opacity: 0.7}).openTooltip();
-            
-    //       }
     
-  // }
-// }
 onEachFeature={function onEachFeature(feature, layer) {
   let label = JSON.stringify(layer.feature.properties.owner_name);
-  
+   
     layer.bindTooltip(label, {
       permanent: false,
       direction: "center",
-      className: "my-labels",
       opacity: 0.7
     });
     layer.on("mouseover", function(e) {
@@ -168,6 +166,24 @@ onEachFeature={function onEachFeature(feature, layer) {
     });
     layer.on("mouseout", function(e) {
       this.closeTooltip();
+    });
+    layer.on("click", (e) => {
+     
+      let coords =  e.target.feature.geometry.coordinates[0][0] ;
+      const map = mapRef.current;
+   
+      let [lng, lat]= coords[0];
+      
+      map.panTo([lat, lng]);
+      layer.setStyle({
+        color: '#02f537',
+        weight: 4,
+        opacity: 0.5
+      });
+
+      
+      
+        
     });
   }
 }
