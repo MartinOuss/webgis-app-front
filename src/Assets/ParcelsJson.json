@@ -12,8 +12,8 @@
             "type": "Feature",
             "properties": {
                 "id": 138,
-                "owner_name": "Mohamed",
-                "node_num": "1",
+                "owner_name": null,
+                "node_num": null,
                 "area": "1596.683801448041",
                 "node_rank": "1",
                 "parcel_nam": "parcel name",
@@ -69,7 +69,7 @@
             "type": "Feature",
             "properties": {
                 "id": 1,
-                "owner_name": "agri2",
+                "owner_name": null,
                 "node_num": null,
                 "area": "1656.9260680542807",
                 "node_rank": null,
@@ -126,7 +126,7 @@
             "type": "Feature",
             "properties": {
                 "id": 2,
-                "owner_name": "agri3",
+                "owner_name": null,
                 "node_num": null,
                 "area": "3291.818987844265",
                 "node_rank": null,

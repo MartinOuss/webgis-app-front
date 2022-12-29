@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRef} from 'react'
-import { GeoJSON, CircleMarker, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
+import { GeoJSON,Popup, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
+import { CircleMarker } from 'react-leaflet/CircleMarker'
 import L, {bounds} from 'leaflet';
 
 
@@ -58,13 +59,16 @@ export const Map = (props) => {
       return {
         color: '#02f537',
         weight: 4,
-        opacity: 0.5
+        opacity: 0.5,
+        zIndex: 10
       }
     } else {
       return {
         color: '#000000',
-        weight: 2,
-        opacity: 0.8
+        weight: 1,
+        opacity: 0.8,
+        zIndex: 1
+
       }
     }
   }
@@ -157,7 +161,8 @@ export const Map = (props) => {
 onEachFeature={function onEachFeature(feature, layer) {
   let label = JSON.stringify(layer.feature.properties.owner_name);
    
-    layer.bindTooltip(label, {
+    if(layer.feature.properties.owner_name !== null){
+      layer.bindTooltip(label, {
       permanent: false,
       direction: "center",
       opacity: 0.7
@@ -186,7 +191,7 @@ onEachFeature={function onEachFeature(feature, layer) {
       
         
     });
-  }
+  }}
 }
 />
 {/* Network Layer */}
@@ -198,21 +203,20 @@ onEachFeature={function onEachFeature(feature, layer) {
 
 {/* CP layer */}
 
-<GeoJSON data ={props.CPJson} 
- pointToLayer={(feature, latlng) => {
-  return (
-    <CircleMarker
-      center={latlng}
-      radius={5}
-      color="red"
-      fillColor="red"
-      fillOpacity={0.5}
-    />
-  );
-}}
-
->
-
+<GeoJSON>
+{props.CPJson?.features.map(feature => (
+  <CircleMarker
+    center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
+    radius={5}
+    color="red"
+    fillColor="red"
+    fillOpacity={0.5}
+  >
+       <Popup>
+          <span>C.P {feature.properties.id}</span>
+        </Popup>
+  </CircleMarker>
+))}
 
 </GeoJSON>
 

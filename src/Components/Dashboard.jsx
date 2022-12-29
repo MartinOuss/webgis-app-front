@@ -14,7 +14,6 @@ import { useState, useEffect } from 'react'
 export const Dashboard = (props) => {
 
   const data = parcelGeoJSON.features;
-  const CPData = CPJson;
   const networkData = NetworkJson;
   const [mapParcels, setMapParcels] = useState(parcelGeoJSON);
   const [sortedData, setSortedData] = useState([]);
@@ -152,7 +151,7 @@ if (schedule.length > 0) {
  return (
     <div className='w-full  p-2 bg-slate-100 flex flex-col md:flex-row ' > 
      
-        <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPData} selectedCP ={selectedCP}/>
+        <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedCP ={selectedCP}/>
     
         <DTable sortedData ={sortedData} dates ={dates} />
 
