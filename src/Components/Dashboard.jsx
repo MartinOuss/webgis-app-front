@@ -3,6 +3,9 @@ import {Map} from '../Components/Map'
 import { DTable } from './DTable'
 import { SetIrriParamsForm } from './SetIrriParamsForm'
 import parcelGeoJSON from '../Assets/ParcelsJson.json'
+import NetworkJson from '../Assets/NetworkJson.json'
+import CPJson from '../Assets/CPJson.json'
+
 import { useState, useEffect } from 'react'
 
 
@@ -11,6 +14,8 @@ import { useState, useEffect } from 'react'
 export const Dashboard = (props) => {
 
   const data = parcelGeoJSON.features;
+  const CPData = CPJson;
+  const networkData = NetworkJson;
   const [mapParcels, setMapParcels] = useState(parcelGeoJSON);
   const [sortedData, setSortedData] = useState([]);
   const [dates , setDates] = useState([]);
@@ -147,7 +152,7 @@ if (schedule.length > 0) {
  return (
     <div className='w-full  p-2 bg-slate-100 flex flex-col md:flex-row ' > 
      
-        <Map sortedData ={sortedData} mapParcels ={mapParcels} selectedCP ={selectedCP}/>
+        <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPData} selectedCP ={selectedCP}/>
     
         <DTable sortedData ={sortedData} dates ={dates} />
 

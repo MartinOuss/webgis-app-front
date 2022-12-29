@@ -1,0 +1,32 @@
+{
+"type": "FeatureCollection",
+"name": "CPJson",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 25, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.346451316459546, 31.891039838387229 ] } },
+{ "type": "Feature", "properties": { "id": 1, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345406117312318, 31.889841293520771 ] } },
+{ "type": "Feature", "properties": { "id": 2, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345187189667699, 31.89004373784562 ] } },
+{ "type": "Feature", "properties": { "id": 3, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345115925894294, 31.890184921831615 ] } },
+{ "type": "Feature", "properties": { "id": 4, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.344709722385886, 31.889938858173039 ] } },
+{ "type": "Feature", "properties": { "id": 5, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.344944892838123, 31.890511661083433 ] } },
+{ "type": "Feature", "properties": { "id": 6, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.344527274716008, 31.890623750244597 ] } },
+{ "type": "Feature", "properties": { "id": 7, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.344557372667265, 31.891321123661239 ] } },
+{ "type": "Feature", "properties": { "id": 8, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.344331999775179, 31.891298133230528 ] } },
+{ "type": "Feature", "properties": { "id": 9, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.343850821241801, 31.891219812465938 ] } },
+{ "type": "Feature", "properties": { "id": 10, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.343423262365968, 31.891581721348082 ] } },
+{ "type": "Feature", "properties": { "id": 11, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.343922767034607, 31.891162725983445 ] } },
+{ "type": "Feature", "properties": { "id": 12, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.343038102139547, 31.890948117863189 ] } },
+{ "type": "Feature", "properties": { "id": 13, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.342518583386496, 31.891200742932384 ] } },
+{ "type": "Feature", "properties": { "id": 14, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.342177509758637, 31.891111628857331 ] } },
+{ "type": "Feature", "properties": { "id": 15, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.343046817804501, 31.891891766879478 ] } },
+{ "type": "Feature", "properties": { "id": 16, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.343488044420912, 31.892229770978467 ] } },
+{ "type": "Feature", "properties": { "id": 17, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.344480480857399, 31.892326998084961 ] } },
+{ "type": "Feature", "properties": { "id": 18, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.34529260072347, 31.892206831554262 ] } },
+{ "type": "Feature", "properties": { "id": 19, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345386406935858, 31.891788691414057 ] } },
+{ "type": "Feature", "properties": { "id": 20, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.34547239596388, 31.891767120641042 ] } },
+{ "type": "Feature", "properties": { "id": 21, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345675130707207, 31.891569667491481 ] } },
+{ "type": "Feature", "properties": { "id": 22, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345960185800823, 31.891197023738769 ] } },
+{ "type": "Feature", "properties": { "id": 23, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345603036360053, 31.890985443735588 ] } },
+{ "type": "Feature", "properties": { "id": 24, "SRC DIST": null }, "geometry": { "type": "Point", "coordinates": [ -4.345288298412473, 31.890741308921474 ] } }
+]
+}

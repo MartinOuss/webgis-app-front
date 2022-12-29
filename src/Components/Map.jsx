@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRef} from 'react'
-import { GeoJSON, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
+import { GeoJSON, CircleMarker, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
 import L, {bounds} from 'leaflet';
 
 
@@ -148,6 +148,7 @@ export const Map = (props) => {
         />
 
           
+{/* Parcels Layer */}
 
 <GeoJSON pathOptions={customStyle} 
 
@@ -188,6 +189,33 @@ onEachFeature={function onEachFeature(feature, layer) {
   }
 }
 />
+{/* Network Layer */}
+
+<GeoJSON data ={props.NetworkJson} >
+
+
+</GeoJSON>
+
+{/* CP layer */}
+
+<GeoJSON data ={props.CPJson} 
+ pointToLayer={(feature, latlng) => {
+  return (
+    <CircleMarker
+      center={latlng}
+      radius={5}
+      color="red"
+      fillColor="red"
+      fillOpacity={0.5}
+    />
+  );
+}}
+
+>
+
+
+</GeoJSON>
+
 
      
       
