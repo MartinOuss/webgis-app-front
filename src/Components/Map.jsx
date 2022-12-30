@@ -1,8 +1,9 @@
 import React from 'react'
-import { useRef} from 'react'
+import { useRef,useEffect, useState} from 'react'
 import { GeoJSON,Popup, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
 import { CircleMarker } from 'react-leaflet/CircleMarker'
 import L, {bounds} from 'leaflet';
+
 
 
 
@@ -16,6 +17,25 @@ export const Map = (props) => {
   let center;
   let zoom;
   const mapRef = useRef(null);
+  const [toggeledCP, setToggeledCP] = useState(new Set());
+  
+
+
+  const toggleSelection = (id) => {
+    // Toggle the selection status of the point
+    if (toggeledCP.has(id)) {
+      // If it is selected, remove it from the Set
+      setToggeledCP(new Set(toggeledCP.delete(id)))
+    } else {
+      // If it is not selected, add it to the Set
+      setToggeledCP(new Set(toggeledCP.add(id)))
+    }
+    console.log({Toggeled:toggeledCP})
+  }
+
+ 
+
+
 
 
   const selectedParcels = props.sortedData.filter(parcel => props.selectedCP.includes(parcel.properties.node_num))
@@ -67,7 +87,28 @@ export const Map = (props) => {
         color: '#000000',
         weight: 1,
         opacity: 0.8,
-        zIndex: 1
+      
+
+      }
+    }
+  }
+
+  const NetcustumStyle = (feature) => {
+    console.log(feature)
+    if (props.selectedCP.includes(feature.properties.End_CP) ) {
+      console.log('here')
+      return {
+        color: '#408bed',
+        weight: 4,
+        opacity: 0.5,
+        zIndex: 10
+      }
+    } else {
+      return {
+        color: '#e8dcdc',
+        weight: 1,
+        opacity: 0.8,
+      
 
       }
     }
@@ -196,29 +237,63 @@ onEachFeature={function onEachFeature(feature, layer) {
 />
 {/* Network Layer */}
 
-<GeoJSON data ={props.NetworkJson} >
+<GeoJSON data ={props.NetworkJson} pathOptions={NetcustumStyle} >
 
 
 </GeoJSON>
 
 {/* CP layer */}
 
-<GeoJSON>
+{/* <GeoJSON
+data = {{...props.CPJson}}
+     onEachFeature={(feature, layer) => {
+      // click event to the layer
+      layer.on('dblclick', (e) => {
+        // Toggle the selection of the feature
+        toggleSelection(feature.properties.id)
+        console.log(e)
+      })
+    }}>
 {props.CPJson?.features.map(feature => (
+    
+  
   <CircleMarker
     center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
     radius={5}
-    color="red"
+    color={toggeledCP.has(feature.properties.id) ? '#02f537' : '#000000'}
     fillColor="red"
     fillOpacity={0.5}
+  
   >
        <Popup>
-          <span>C.P {feature.properties.id}</span>
+          <span>C.P {feature.properties.id} </span>
         </Popup>
   </CircleMarker>
 ))}
 
-</GeoJSON>
+</GeoJSON> */}
+
+
+ {/*  this one still doesnt work properly */}
+
+{props.CPJson.features.map(feature => (
+        <CircleMarker
+          center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
+          radius={5}
+          color={toggeledCP.has(feature.properties.id) ? '#02f537' : '#000000'}
+          fillColor="red"
+          fillOpacity={0.5}
+          onDblClick={() => toggleSelection(feature.properties.id)}
+        >
+          <Popup>
+            <span>C.P {feature.properties.id}</span>
+          </Popup>
+        </CircleMarker>
+      ))}
+
+
+
+ 
 
 
      
