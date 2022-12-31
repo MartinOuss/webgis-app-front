@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef,useEffect, useState} from 'react'
+import { useRef} from 'react'
 import { GeoJSON,Popup, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
 import { CircleMarker } from 'react-leaflet/CircleMarker'
 import L, {bounds} from 'leaflet';
@@ -17,26 +17,27 @@ export const Map = (props) => {
   let center;
   let zoom;
   const mapRef = useRef(null);
-  const [toggeledCP, setToggeledCP] = useState(new Set());
+
+// had lblan dyal Toggle mazal mal9it lih l7el.............................................
+
+  // const [toggeledCP, setToggeledCP] = useState(new Set());
   
+  // const toggleSelection = (id) => {
+  //   // Toggle the selection status of the point
+  //   if (toggeledCP.has(id)) {
+  //     // If it is selected, remove it from the Set
+  //     setToggeledCP(new Set(toggeledCP.delete(id)))
+  //   } else {
+  //     // If it is not selected, add it to the Set
+  //     setToggeledCP(new Set(toggeledCP.add(id)))
+  //   }
+  //   console.log({Toggeled:toggeledCP})
+  // }
+
+//  ...............................................................................................
 
 
-  const toggleSelection = (id) => {
-    // Toggle the selection status of the point
-    if (toggeledCP.has(id)) {
-      // If it is selected, remove it from the Set
-      setToggeledCP(new Set(toggeledCP.delete(id)))
-    } else {
-      // If it is not selected, add it to the Set
-      setToggeledCP(new Set(toggeledCP.add(id)))
-    }
-    console.log({Toggeled:toggeledCP})
-  }
-
- 
-
-
-
+// Calculate Map bounds changes 
 
   const selectedParcels = props.sortedData.filter(parcel => props.selectedCP.includes(parcel.properties.node_num))
 
@@ -71,48 +72,61 @@ export const Map = (props) => {
  
  
   
-  // Calculate the center and zoom level based on the bounds
+// to style parcels and selected ones 
  
 
   const customStyle = (feature) => {
     if (props.selectedCP.includes(feature.properties.node_num) ) {
       return {
         color: '#02f537',
-        weight: 4,
+        weight: 3,
         opacity: 0.5,
-        zIndex: 10
+        zIndex: 10,
+        dashArray:"0, 0, 0, 0"
+
       }
     } else {
       return {
-        color: '#000000',
-        weight: 1,
-        opacity: 0.8,
+        // color: '#7ef6fc',
+        color :'#a9d9db',
+        weight: 2,
+        opacity: 0.2,
+        dashArray:"5, 10, 5, 10"
       
 
       }
     }
   }
+
+
+  //  to style Network and its selected parts
 
   const NetcustumStyle = (feature) => {
-    console.log(feature)
-    if (props.selectedCP.includes(feature.properties.End_CP) ) {
-      console.log('here')
-      return {
+    
+    if (props.selectedCP.includes(feature.properties.End_CP.toString()) ) {
+
+        return {
         color: '#408bed',
-        weight: 4,
-        opacity: 0.5,
+        weight: 5,
+        opacity: 1,
         zIndex: 10
       }
     } else {
-      return {
+        return {
         color: '#e8dcdc',
         weight: 1,
-        opacity: 0.8,
-      
-
+        opacity: 0.6,
+    
       }
     }
-  }
+  };
+
+ 
+
+ 
+  
+
+ 
 
 
 
@@ -183,7 +197,7 @@ export const Map = (props) => {
 
   //.........................................................................................
   return (
-    <div className="h-[400px]  w-full md:w-[1400px] border border-black mr-1 text-center">
+    <div className="h-[600px]  w-full md:w-[1400px] border border-black mr-1 text-center">
       <MapContainer className="min-h-full" center={center} zoom={zoom} ref={mapRef} bounds={bounds} scrollWheelZoom={false} >
         <TileLayer
           attribution=''
@@ -222,11 +236,12 @@ onEachFeature={function onEachFeature(feature, layer) {
       let [lng, lat]= coords[0];
       
       map.panTo([lat, lng]);
-      layer.setStyle({
-        color: '#02f537',
-        weight: 4,
-        opacity: 0.5
-      });
+
+      // layer.setStyle({
+      //   color: '#02f537',
+      //   weight: 4,
+      //   opacity: 0.5
+      // });
 
       
       
@@ -276,20 +291,40 @@ data = {{...props.CPJson}}
 
  {/*  this one still doesnt work properly */}
 
-{props.CPJson.features.map(feature => (
+{props.selectedCP.length > 0 && props.CPJson.features.map(feature => (
+  
         <CircleMarker
+          key={feature.properties.id}
           center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
           radius={5}
-          color={toggeledCP.has(feature.properties.id) ? '#02f537' : '#000000'}
-          fillColor="red"
+          color={'#000000'}
+          fillColor={props.selectedCP.includes(feature.properties.id.toString()) ? '#02f537' : "red"}
           fillOpacity={0.5}
-          onDblClick={() => toggleSelection(feature.properties.id)}
+          onClick={(e) => console.log(e.target)}
         >
           <Popup>
             <span>C.P {feature.properties.id}</span>
           </Popup>
         </CircleMarker>
       ))}
+
+
+{props.selectedCP.length === 0 && props.CPJson.features.map(feature => (
+  
+  <CircleMarker
+    key={feature.properties.id}
+    center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
+    radius={5}
+    color={'#000000'}
+    fillColor= "red"
+    fillOpacity={0.5}
+    onClick={(e) => console.log(e.target)}
+  >
+    <Popup>
+      <span>C.P {feature.properties.id}</span>
+    </Popup>
+  </CircleMarker>
+))}
 
 
 

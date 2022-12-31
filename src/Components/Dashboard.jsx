@@ -153,7 +153,7 @@ if (schedule.length > 0) {
      
         <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedCP ={selectedCP}/>
     
-        <DTable sortedData ={sortedData} dates ={dates} />
+        {/* <DTable sortedData ={sortedData} dates ={dates} /> */}
 
         <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />
 
