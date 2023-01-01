@@ -140,6 +140,16 @@ if (schedule.length > 0) {
       
    };
 
+   const UpdateDataOnDT =(id)=>{
+    
+    console.log(sortedData);
+    let newItems = sortedData.filter(item => item.properties.id !== id) ; 
+    console.log(newItems);
+    setSortedData(newItems);
+    console.log(`db bsh ${id} deleted`)
+    
+   }
+
   console.log({sortedData :sortedData})
   console.log({dates : dates})
   console.log({ConnexionPoints : CPOptions })
@@ -147,19 +157,15 @@ if (schedule.length > 0) {
   console.log({newParcels: mapParcels})
 
   
- 
-
-  
-
 
  return (
     <div className='w-full  p-2 bg-slate-100 flex flex-col md:flex-row ' > 
      
         <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedCP ={selectedCP}/>
     
-        {(sortedData.length > 0 && dates.length > 0)&& <DTable sortedData ={sortedData} dates ={dates} />}
+        {(sortedData.length > 0 && dates.length > 0)&& <DTable sortedData ={sortedData} dates ={dates} onUpdateonDB = {UpdateDataOnDT} />}
 
-        {sortedData.length == 0 && <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />}
+        {sortedData.length === 0 && <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />}
 
        </div>
   )
