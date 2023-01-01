@@ -129,9 +129,13 @@ if (schedule.length > 0) {
 
 
   const calculateSchedule = (startDate, endDate, selectedOptions) => {
+    if (startDate){
   setschedule((item)=>[...item, {start:startDate, end : endDate}]);
   setSelectedCP(selectedOptions)
    console.log({startDate,endDate,selectedOptions})
+    }else{
+      console.warn('wa makaynch  start time')
+    }
     
       
    };
@@ -153,9 +157,9 @@ if (schedule.length > 0) {
      
         <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedCP ={selectedCP}/>
     
-        {/* <DTable sortedData ={sortedData} dates ={dates} /> */}
+        {(sortedData.length > 0 && dates.length > 0)&& <DTable sortedData ={sortedData} dates ={dates} />}
 
-        <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />
+        {sortedData.length == 0 && <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />}
 
        </div>
   )
