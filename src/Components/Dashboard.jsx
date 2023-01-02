@@ -85,6 +85,18 @@ export const Dashboard = (props) => {
     }
   }, [data, CPOptions]);
 
+  useEffect(() => {
+
+    let newItems = sortedData.filter(item =>  selectedCP.includes(item.properties.node_num) ) ; 
+    let itemsIds = newItems.map((item)=> item.properties.id);
+   
+    setSelectedParcelsById(itemsIds);
+   
+   
+   
+  }, [sortedData]);
+
+ 
   
   
   useEffect(() => {    
@@ -135,12 +147,7 @@ if (schedule.length > 0) {
   setschedule((item)=>[...item, {start:startDate, end : endDate}]);
   setSelectedCP(selectedOptions)
 
-  let newItems = sortedData.filter(item =>  selectedCP.includes(item.properties.node_num) ) ; 
-
-
-    // ..................................... this oe should not be only here because it doesnt show the initial data ...........
-    let itemsIds = newItems.map((item)=> item.properties.id)
-    setSelectedParcelsById(itemsIds);
+ 
 
    console.log({startDate,endDate,selectedOptions})
     }else{
@@ -155,13 +162,12 @@ if (schedule.length > 0) {
     console.log(sortedData);
     let newItems = sortedData.filter(item => item.properties.id !== id) ; 
 
-
-    // ..................................... this oe should not be only here because it doesnt show the initial data ...........
-    let itemsIds = newItems.map((item)=> item.properties.id)
-    setSelectedParcelsById(itemsIds);
-// ............................................................................
-    console.log({newitems:itemsIds});
-    console.warn({ids : selectedParcelsById})
+//     // ..................................... this oe should not be only here because it doesnt show the initial data ...........
+//     let itemsIds = newItems.map((item)=> item.properties.id)
+//     setSelectedParcelsById(itemsIds);
+// // ............................................................................
+//     console.log({newitems:itemsIds});
+//     console.warn({ids : selectedParcelsById})
     setSortedData(newItems);
     console.log(`db bsh ${id} deleted`)
     

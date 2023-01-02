@@ -18,7 +18,9 @@ export const Map = (props) => {
   let zoom;
   const mapRef = useRef(null);
   const parcelsRef = useRef(null);
-
+  const netRef = useRef(null);
+  const CPRef = useRef(null)
+  
 
  
 
@@ -110,10 +112,14 @@ export const Map = (props) => {
 
 
   //  to style Network and its selected parts
-
-  const NetcustumStyle = (feature) => {
+  let newItems = props.sortedData.filter(item =>  props.selectedCP.includes(item.properties.node_num) ) ; 
     
-    if (props.selectedCP.includes(feature.properties.End_CP.toString()) ) {
+  let itemCP = Array.from(new Set(newItems.map((item)=> item.properties.node_num)));
+
+  const NetcustumStyle = (feature) => {  
+
+     
+    if (itemCP.includes(feature.properties.End_CP.toString()) ) {
 
         return {
         color: '#408bed',
@@ -131,6 +137,15 @@ export const Map = (props) => {
     }
   };
 
+  const handleCPStyle =(feature)=>{ if (
+    itemCP.includes(feature.properties.id.toString())){
+return '#02f537'
+  } else {
+    return "red"
+  }
+    
+  }
+
   // useEffect(() => {
   //   if (parcelsRef.current){
   //     parcelsRef.current. clearLayers()  
@@ -145,6 +160,21 @@ export const Map = (props) => {
       parcelsRef.current.setStyle(customStyle) // update the style
     }
   }, [parcelsRef, customStyle]) 
+
+  useEffect(() => {
+    if (netRef.current){
+      netRef.current.setStyle(NetcustumStyle) // update the style
+      console.log('set net style done ?')
+    }
+  }, [netRef, NetcustumStyle]) 
+
+  useEffect(() => {
+    if (CPRef.current){
+      handleCPStyle()
+         
+      console.log('set CP style done ?')
+    }
+  }, [CPRef]) 
 
  
   
@@ -284,7 +314,7 @@ onEachFeature={function onEachFeature(feature, layer) {
 
 {/* Network Layer */}
 
-<GeoJSON data ={props.NetworkJson} pathOptions={NetcustumStyle} >
+<GeoJSON data ={props.NetworkJson} style={NetcustumStyle} ref={netRef} >
 
 
 </GeoJSON>
@@ -326,11 +356,13 @@ data = {{...props.CPJson}}
 {props.selectedCP.length > 0 && props.CPJson.features.map(feature => (
   
         <CircleMarker
+          ref ={CPRef}
           key={feature.properties.id}
           center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
           radius={5}
           color={'#000000'}
-          fillColor={props.selectedCP.includes(feature.properties.id.toString()) ? '#02f537' : "red"}
+          fillColor={handleCPStyle(feature)}
+          // fillColor={itemCP.includes(feature.properties.id.toString()) ? '#02f537' : "red"}
           fillOpacity={0.5}
           onClick={(e) => console.log(e.target)}
         >
