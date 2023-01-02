@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef} from 'react'
+import { useRef, useEffect} from 'react'
 import { GeoJSON,Popup, MapContainer, FeatureGroup, TileLayer} from "react-leaflet"
 import { CircleMarker } from 'react-leaflet/CircleMarker'
 import L, {bounds} from 'leaflet';
@@ -17,6 +17,15 @@ export const Map = (props) => {
   let center;
   let zoom;
   const mapRef = useRef(null);
+  const parcelsRef = useRef(null);
+
+
+ 
+
+
+
+ 
+
 
 // had lblan dyal Toggle mazal mal9it lih l7el.............................................
 
@@ -76,7 +85,8 @@ export const Map = (props) => {
  
 
   const customStyle = (feature) => {
-    if (props.selectedCP.includes(feature.properties.node_num) ) {
+    console.log('custom style runs')
+    if (props.selectedIds.includes(feature.properties.id) ) {
       return {
         color: '#02f537',
         weight: 3,
@@ -87,7 +97,7 @@ export const Map = (props) => {
       }
     } else {
       return {
-        // color: '#7ef6fc',
+        
         color :'#a9d9db',
         weight: 2,
         opacity: 0.2,
@@ -121,7 +131,20 @@ export const Map = (props) => {
     }
   };
 
- 
+  // useEffect(() => {
+  //   if (parcelsRef.current){
+  //     parcelsRef.current. clearLayers()  
+  //     parcelsRef.current.addData(props.mapParcels)
+  //     parcelsRef.current.setStyle(customStyle) // add this line to update the style
+  //   }
+  // }, [parcelsRef, props.mapParcels, customStyle])
+
+
+  useEffect(() => {
+    if (parcelsRef.current){
+      parcelsRef.current.setStyle(customStyle) // update the style
+    }
+  }, [parcelsRef, customStyle]) 
 
  
   
@@ -196,9 +219,14 @@ export const Map = (props) => {
   // }
 
   //.........................................................................................
+
+
+  console.warn(selectedParcels);
+  console.warn(props.mapParcels);
+ 
   return (
     <div className="h-[600px]  w-full md:w-[1400px] border border-black mr-1 text-center">
-      <MapContainer className="min-h-full" center={center} zoom={zoom} ref={mapRef} bounds={bounds} scrollWheelZoom={false} >
+      <MapContainer className="min-h-full" center={center} zoom={zoom}  ref={mapRef} bounds={bounds} scrollWheelZoom={false} >
         <TileLayer
           attribution=''
           url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
@@ -209,9 +237,11 @@ export const Map = (props) => {
           
 {/* Parcels Layer */}
 
-<GeoJSON pathOptions={customStyle} 
+<GeoJSON style ={customStyle} 
+
 
     data = {props.mapParcels} 
+    ref={parcelsRef}
     
 onEachFeature={function onEachFeature(feature, layer) {
   let label = JSON.stringify(layer.feature.properties.owner_name);
@@ -250,6 +280,8 @@ onEachFeature={function onEachFeature(feature, layer) {
   }}
 }
 />
+
+
 {/* Network Layer */}
 
 <GeoJSON data ={props.NetworkJson} pathOptions={NetcustumStyle} >
@@ -325,15 +357,6 @@ data = {{...props.CPJson}}
     </Popup>
   </CircleMarker>
 ))}
-
-
-
- 
-
-
-     
-      
-
 
         <FeatureGroup>
           {/* for leaflet-Draw ........................... */}

@@ -38,7 +38,7 @@ export const SetIrriParamsForm = ({ CPOptions, onSubmit }) => {
     };
   
     return (
-      <form className="bg-gray-200 p-4 rounded-md shadow-md" onSubmit={handleSubmit}>
+      <form className="bg-gray-200 p-4 max-h-[400px] rounded-md shadow-md" onSubmit={handleSubmit}>
         <label className="block font-bold mb-2 text-gray-700">
           Start date and time:
           <input className="form-input mt-1 block w-full" type="datetime-local" value={startDateTime} onChange={handleStartDateTimeChange} />
@@ -52,7 +52,7 @@ export const SetIrriParamsForm = ({ CPOptions, onSubmit }) => {
         <label className="block font-bold mb-2 text-gray-700">
         Select Connexion points:
         </label>
-        <div className="block  w-full font-bold mb-2 text-gray-700 overflow-scroll">
+        <div className="block  w-full h-[100px] font-bold mb-2 text-gray-700 overflow-scroll">
         {CPOptions.map((option) => (
           <label key={option} >
             <input

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Parcel } from './Parcel';
 
-export const DTable = ({sortedData,dates, onUpdateonDB}) => {
+export const DTable = ({sortedData,dates, onUpdateinDB}) => {
 
   const handleDelete = (parcelId) => {
     // Delete the row with the corresponding parcelId
     console.log(`${parcelId} is deleted!`)
-    onUpdateonDB(parcelId);
+    onUpdateinDB(parcelId);
     
   }
 

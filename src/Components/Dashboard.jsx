@@ -23,6 +23,8 @@ export const Dashboard = (props) => {
   // state to store start and end datetime from the form
   const [schedule , setschedule]= useState([]);
   const [selectedCP, setSelectedCP] = useState([]);
+  const [selectedParcelsById, setSelectedParcelsById] = useState([]);
+
   
   
   useEffect( () => {
@@ -132,6 +134,14 @@ if (schedule.length > 0) {
     if (startDate){
   setschedule((item)=>[...item, {start:startDate, end : endDate}]);
   setSelectedCP(selectedOptions)
+
+  let newItems = sortedData.filter(item =>  selectedCP.includes(item.properties.node_num) ) ; 
+
+
+    // ..................................... this oe should not be only here because it doesnt show the initial data ...........
+    let itemsIds = newItems.map((item)=> item.properties.id)
+    setSelectedParcelsById(itemsIds);
+
    console.log({startDate,endDate,selectedOptions})
     }else{
       console.warn('wa makaynch  start time')
@@ -140,11 +150,18 @@ if (schedule.length > 0) {
       
    };
 
-   const UpdateDataOnDT =(id)=>{
+   const UpdateDatainDT =(id)=>{
     
     console.log(sortedData);
     let newItems = sortedData.filter(item => item.properties.id !== id) ; 
-    console.log(newItems);
+
+
+    // ..................................... this oe should not be only here because it doesnt show the initial data ...........
+    let itemsIds = newItems.map((item)=> item.properties.id)
+    setSelectedParcelsById(itemsIds);
+// ............................................................................
+    console.log({newitems:itemsIds});
+    console.warn({ids : selectedParcelsById})
     setSortedData(newItems);
     console.log(`db bsh ${id} deleted`)
     
@@ -155,15 +172,16 @@ if (schedule.length > 0) {
   console.log({ConnexionPoints : CPOptions })
   console.log({schedule: schedule})
   console.log({newParcels: mapParcels})
+  console.log({selectedCP : selectedCP})
 
   
 
  return (
-    <div className='w-full  p-2 bg-slate-100 flex flex-col md:flex-row ' > 
+    <div className='w-full h-full p-2 bg-slate-100 flex flex-col md:flex-row ' > 
      
-        <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedCP ={selectedCP}/>
-    
-        {(sortedData.length > 0 && dates.length > 0)&& <DTable sortedData ={sortedData} dates ={dates} onUpdateonDB = {UpdateDataOnDT} />}
+         <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedIds ={selectedParcelsById} selectedCP ={selectedCP}/>
+
+        {(sortedData.length > 0 && dates.length > 0)&& <DTable sortedData ={sortedData} dates ={dates} onUpdateinDB = {UpdateDatainDT} />}
 
         {sortedData.length === 0 && <SetIrriParamsForm CPOptions={CPOptions} onSubmit={calculateSchedule} />}
 
