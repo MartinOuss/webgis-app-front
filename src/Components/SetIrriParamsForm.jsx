@@ -44,10 +44,10 @@ export const SetIrriParamsForm = ({ CPOptions, onSubmit }) => {
           <input className="form-input mt-1 block w-full" type="datetime-local" value={startDateTime} onChange={handleStartDateTimeChange} />
         </label>
         <br />
-        <label className="block font-bold mb-2 text-gray-700">
+        {/* <label className="block font-bold mb-2 text-gray-700">
           End date and time:
           <input className="form-input mt-1 block w-full" type="datetime-local" value={endDateTime} onChange={handleEndDateTimeChange} />
-        </label>
+        </label> */}
         <br />
         <label className="block font-bold mb-2 text-gray-700">
         Select Connexion points:

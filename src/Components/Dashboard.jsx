@@ -48,6 +48,9 @@ export const Dashboard = (props) => {
     // Update the state variable with the sorted data
     setSortedData(sortedData);
 
+     
+    
+
     }
   }, [data ,schedule,selectedCP]);
 
@@ -162,13 +165,12 @@ if (schedule.length > 0) {
     console.log(sortedData);
     let newItems = sortedData.filter(item => item.properties.id !== id) ; 
 
-//     // ..................................... this oe should not be only here because it doesnt show the initial data ...........
-//     let itemsIds = newItems.map((item)=> item.properties.id)
-//     setSelectedParcelsById(itemsIds);
-// // ............................................................................
-//     console.log({newitems:itemsIds});
-//     console.warn({ids : selectedParcelsById})
+    
+
+
     setSortedData(newItems);
+    
+    console.log({newCPupdatewaa33 : selectedCP})
     console.log(`db bsh ${id} deleted`)
     
    }

@@ -19,7 +19,7 @@ export const Map = (props) => {
   const mapRef = useRef(null);
   const parcelsRef = useRef(null);
   const netRef = useRef(null);
-  const CPRef = useRef(null)
+  // const CPRef = useRef(null);
   
 
  
@@ -64,7 +64,7 @@ export const Map = (props) => {
   mapRef.current.fitBounds(revBounds);
   
   center = revBounds.getCenter();
-  zoom = 16;
+  zoom = 18;
   console.log({center , bounds, revBounds})
 } else {
  bounds = new L.LatLngBounds([[
@@ -114,7 +114,7 @@ export const Map = (props) => {
   //  to style Network and its selected parts
   let newItems = props.sortedData.filter(item =>  props.selectedCP.includes(item.properties.node_num) ) ; 
     
-  let itemCP = Array.from(new Set(newItems.map((item)=> item.properties.node_num)));
+  const itemCP = Array.from(new Set(newItems.map((item)=> item.properties.node_num)));
 
   const NetcustumStyle = (feature) => {  
 
@@ -137,14 +137,36 @@ export const Map = (props) => {
     }
   };
 
-  const handleCPStyle =(feature)=>{ if (
-    itemCP.includes(feature.properties.id.toString())){
-return '#02f537'
-  } else {
-    return "red"
+ const renderCP =(itemCP)=>{
+  if(itemCP.length > 0 && props.selectedCP.length > 0){
+    return (
+    props.CPJson.features.slice().filter(feature=> itemCP.includes(feature.properties.id.toString())).map(feature => (
+  
+      <CircleMarker
+        // ref ={CPRef}
+        key={feature.properties.id}
+        center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
+        radius={5}
+        color={'#000000'}
+        // fillColor={itemCP.includes(feature.properties.id.toString()) ? '#02f537' : "red"}
+        fillColor={'#02f537' }
+        fillOpacity={0.5}
+        onClick={(e) => console.log(e.target)}
+      >
+        <Popup>
+          <span>C.P {feature.properties.id}</span>
+        </Popup>
+      </CircleMarker>
+    )))
+
+
+ 
+
   }
-    
-  }
+
+
+ }
+
 
   // useEffect(() => {
   //   if (parcelsRef.current){
@@ -169,12 +191,14 @@ return '#02f537'
   }, [netRef, NetcustumStyle]) 
 
   useEffect(() => {
-    if (CPRef.current){
-      handleCPStyle()
-         
-      console.log('set CP style done ?')
-    }
-  }, [CPRef]) 
+        
+      renderCP(itemCP)
+      console.log('renderCP done ')
+    
+  }, [itemCP, renderCP]) 
+ 
+
+
 
  
   
@@ -251,8 +275,7 @@ return '#02f537'
   //.........................................................................................
 
 
-  console.warn(selectedParcels);
-  console.warn(props.mapParcels);
+
  
   return (
     <div className="h-[600px]  w-full md:w-[1400px] border border-black mr-1 text-center">
@@ -353,7 +376,11 @@ data = {{...props.CPJson}}
 
  {/*  this one still doesnt work properly */}
 
-{props.selectedCP.length > 0 && props.CPJson.features.map(feature => (
+ 
+ {renderCP(itemCP)}
+  
+
+{/* {itemCP.length > 0 && props.selectedCP.length > 0 && props.CPJson.features.map(feature => (
   
         <CircleMarker
           ref ={CPRef}
@@ -361,8 +388,7 @@ data = {{...props.CPJson}}
           center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
           radius={5}
           color={'#000000'}
-          fillColor={handleCPStyle(feature)}
-          // fillColor={itemCP.includes(feature.properties.id.toString()) ? '#02f537' : "red"}
+          fillColor={itemCP.includes(feature.properties.id.toString()) ? '#02f537' : "red"}
           fillOpacity={0.5}
           onClick={(e) => console.log(e.target)}
         >
@@ -370,9 +396,28 @@ data = {{...props.CPJson}}
             <span>C.P {feature.properties.id}</span>
           </Popup>
         </CircleMarker>
-      ))}
+      ))} */}
 
+{props.CPJson.features.slice().filter(feature=> !itemCP.includes(feature.properties.id.toString())).map(feature => (
+    
+    <CircleMarker
+      // ref ={CPRef}
+      key={feature.properties.id}
+      center={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
+      radius={5}
+      color={'#000000'}
+      // fillColor={itemCP.includes(feature.properties.id.toString()) ? '#02f537' : "red"}
+      fillColor={'red' }
+      fillOpacity={0.5}
+      onClick={(e) => console.log(e.target)}
+    >
+      <Popup>
+        <span>C.P {feature.properties.id}</span>
+      </Popup>
+    </CircleMarker>
+  ))}
 
+{/* 
 {props.selectedCP.length === 0 && props.CPJson.features.map(feature => (
   
   <CircleMarker
@@ -388,7 +433,7 @@ data = {{...props.CPJson}}
       <span>C.P {feature.properties.id}</span>
     </Popup>
   </CircleMarker>
-))}
+))} */}
 
         <FeatureGroup>
           {/* for leaflet-Draw ........................... */}
