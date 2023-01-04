@@ -18,7 +18,7 @@ export const Navbar = () => {
             </div>
             <div className='hidden md:flex items-center justify-end pr-8' >
                 <button className='h-12  p-1 px-4 text-slate-900 font-bold border border-white  bg-slate-300  hover:bg-transparent hover:text-white   rounded-md'> 
-                Sign In </button>
+                Get started </button>
 
             </div>
 
@@ -36,7 +36,7 @@ export const Navbar = () => {
       <li className='border-b-2 border-teal-300 w-full'>About</li>
       <div className='flex flex-col mr-3'>
     <button className=' mb-4 mt-4 h-12 py-3  p-1 px-4 text-slate-900 font-bold border border-white  bg-slate-300  hover:bg-transparent hover:text-white   rounded-md'> 
-                Sign In </button>
+                Get started </button>
 
     </div>
     </ul>

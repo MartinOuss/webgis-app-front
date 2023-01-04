@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.App {
+    /*  styles for the App component go here */
+  }
+  
+  .Dashboard {
+    /*  styles for the Dashboard component go here */
+  }
+  
+  .Map {
+    /*  styles for the Map component go here */
+  }
+  
+  .DTable {
+    /*  styles for the DTable component go here */
+  }
+  
+  .SetIrriParamsForm {
+    /*  styles for the SetIrriParamsForm component go here */
+  }

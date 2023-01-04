@@ -38,7 +38,7 @@ export const SetIrriParamsForm = ({ CPOptions, onSubmit }) => {
     };
   
     return (
-      <form className="bg-gray-200 p-4 max-h-[400px] rounded-md shadow-md" onSubmit={handleSubmit}>
+      <form className=" item-center bg-gray-200 p-4 max-h-[400px] rounded-md shadow-md" onSubmit={handleSubmit}>
         <label className="block font-bold mb-2 text-gray-700">
           Start date and time:
           <input className="form-input mt-1 block w-full" type="datetime-local" value={startDateTime} onChange={handleStartDateTimeChange} />

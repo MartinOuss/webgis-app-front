@@ -49,8 +49,6 @@ export const Dashboard = (props) => {
     setSortedData(sortedData);
 
      
-    
-
     }
   }, [data ,schedule,selectedCP]);
 
@@ -186,7 +184,7 @@ if (schedule.length > 0) {
 
  return (
     <div className='w-full h-full p-2 bg-slate-100 flex flex-col md:flex-row ' > 
-     
+         
          <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedIds ={selectedParcelsById} selectedCP ={selectedCP}/>
 
         {(sortedData.length > 0 && dates.length > 0)&& <DTable sortedData ={sortedData} dates ={dates} onUpdateinDB = {UpdateDatainDT} />}
