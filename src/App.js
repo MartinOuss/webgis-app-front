@@ -8,7 +8,7 @@ function App() {
       <Navbar className="z-1000"> </Navbar>
       <section id='Home' >
       <div
-        class="container flex flex-col items-center px-8 mx-auto mt-10 space-y-0 md:space-y-0 md:flex-row"
+        class="container h-screen flex flex-col items-center px-8 mx-auto mt-10 space-y-0 md:space-y-0 md:flex-row"
       >
         
         <div class="flex flex-col mb-32 space-y-12 md:w-1/2">

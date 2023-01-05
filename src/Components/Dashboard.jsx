@@ -106,7 +106,7 @@ export const Dashboard = (props) => {
    let initialDate = new Date();
 
 if (schedule.length > 0) {
-  const { start } = schedule[0];
+  const { start } = schedule[schedule.length-1];
   initialDate = new Date(start);
 }
       

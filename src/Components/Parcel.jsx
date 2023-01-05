@@ -14,12 +14,12 @@ export const Parcel = (props) => {
   }
 
   return (
-    <tr>
-      <td className="border border-slate-700">{props.parcelId}</td>
-      <td className="border border-slate-700">{props.parcelOwner}</td>
-      <td className="border border-slate-700">{props.nodeNumber}</td>
-      <td className="border border-slate-700">{props.duration}</td>
-      <td className="border border-slate-700">{props.rendezVous}</td>
+    <tr className="border">
+      <td className="">{props.parcelId}</td>
+      <td className="">{props.parcelOwner}</td>
+      <td className="">{props.nodeNumber}</td>
+      <td className="">{props.duration}</td>
+      <td className="">{props.rendezVous}</td>
       <td>
       <button className="btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full" onClick={handleDelete}>
   <TiDelete />

@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 
-@layer base {
+/* @layer base {
   li {
     @apply p-4 font-bold text-white hover:text-zinc-300
   }
    
-}
+} */
 
 
 

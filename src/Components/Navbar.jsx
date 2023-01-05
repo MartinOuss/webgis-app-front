@@ -12,8 +12,8 @@ export const Navbar = () => {
             <div className='flex items-center'>
                 <h1 className='text-white text-xl font-bold text-center my-6 mr-2 '> IrriManager. </h1>
                 <ul className='hidden pl-8 md:flex'>
-                    <li>Home</li>
-                    <li>About</li>
+                    {/* <li>Home</li>
+                    <li>About</li> */}
                 </ul>
             </div>
             <div className='hidden md:flex items-center justify-end pr-8' >
@@ -32,8 +32,8 @@ export const Navbar = () => {
         </div>
    
     <ul className={!nav ? 'hidden':'absolute bg-teal-700 w-full px-8'}>
-      <li className='border-b-2 border-teal-300 w-full'>Home</li>
-      <li className='border-b-2 border-teal-300 w-full'>About</li>
+      {/* <li className='border-b-2 border-teal-300 w-full'>Home</li>
+      <li className='border-b-2 border-teal-300 w-full'>About</li> */}
       <div className='flex flex-col mr-3'>
     <button className=' mb-4 mt-4 h-12 py-3  p-1 px-4 text-slate-900 font-bold border border-white  bg-slate-300  hover:bg-transparent hover:text-white   rounded-md'> 
                 Get started </button>
