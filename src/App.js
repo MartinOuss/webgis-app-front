@@ -1,4 +1,5 @@
 import './App.css';
+import 'tw-elements';
 import { Navbar } from './Components/Navbar';
 import {Dashboard} from './Components/Dashboard'
 

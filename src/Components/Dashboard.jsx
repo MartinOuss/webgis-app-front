@@ -183,7 +183,7 @@ if (schedule.length > 0) {
   
 
  return (
-    <div className='w-full h-full p-2 bg-slate-100 flex flex-col md:flex-row ' > 
+    <div className='w-full h-screen p-2 bg-slate-100 flex flex-col md:flex-row ' > 
          
          <Map sortedData ={sortedData} mapParcels ={mapParcels} NetworkJson = {networkData} CPJson = {CPJson} selectedIds ={selectedParcelsById} selectedCP ={selectedCP}/>
 

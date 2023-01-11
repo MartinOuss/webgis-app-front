@@ -13,8 +13,8 @@ export const DTable = ({sortedData,dates, onUpdateinDB}) => {
   
   return (
     <div className='flex justify-center h-full md:w-full'>
-    <div className="overflow-auto   mr-1 text-center p-2">
-      <table className=" table-fixed border-collapse border-spacing-2 rounded border border-slate-500  w-full">
+    <div className="overflow-y-scroll  mr-1 text-center ">
+      <table className=" table-fixed border-collapse border-spacing-2 rounded border border-slate-500  w-full ">
         <thead className="sticky top-0 bg-slate-500 text-white h-1">
           <tr className='border border-slate-600'>
             <th className="p-2 ">Parcel ID</th>
@@ -27,7 +27,7 @@ export const DTable = ({sortedData,dates, onUpdateinDB}) => {
 
           </tr>
         </thead>
-        <tbody className="p-1 w-full">
+        <tbody className="p-1 mt-2 w-full">
          
          
 

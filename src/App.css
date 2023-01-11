@@ -2,22 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-.App {
-    /*  styles for the App component go here */
+/* styling or the form */
+  
+  input[type="datetime-local"] {
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 300px;
+    background-color: #d5dee6;
   }
   
-  .Dashboard {
-    /*  styles for the Dashboard component go here */
+  input[type="datetime-local"]:focus {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #719ECE;
+    font-size: medium;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    
   }
   
-  .Map {
-    /*  styles for the Map component go here */
+  input[type="datetime-local"]:hover {
+    background-color: #dcdcdc;
   }
   
-  .DTable {
-    /*  styles for the DTable component go here */
+  input[type="datetime-local"]:disabled {
+    background-color: #e6e6e6;
+  }
+ ::-webkit-calendar-picker-indicator {
+    background-color: #e6e6e6;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  
+  .form-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
   }
   
-  .SetIrriParamsForm {
-    /*  styles for the SetIrriParamsForm component go here */
+  .form-switch input[type='checkbox'] {
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
+  
+  .form-switch .slider-round {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 30px;
+    background-color: #ccc;
+    transition: 0.4s;
+  }
+  
+  .form-switch input[type='checkbox']:checked + .slider-round {
+    background-color: #719ECE;
+  }
+  
+  
+  
+  
+  
+ .form-switch .slider-round::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+  }
+  
+  .form-switch input[type='checkbox']:checked + .slider-round::before {
+  transform: translateX(24px);
+  }
+
+
+/* 
+  input[type="checkbox"] {
+   position: relative;
+   width: 20px;
+   height: 10px;
+   background: #c6c6c6;
+   outline: none;
+   border-radius: 5px;
+   box-shadow: inset 0 0 5px rgba(0, 0,0, 0.2);
+   transition: 0.5s;
+  }
+
+  input :checked [type="checkbox"] {
+    
+    background: #4aca73;
+    
+   }
+   input[type="checkbox"] :before {
+    position: absolute;
+    content: '';
+    width: 20px;
+    height: 10px;
+    background: #fff;
+    border-radius: 5px;
+    transform: scale(1.1);
+    transition: 0.5s;
+    top :0;
+    left:0;
+   } */

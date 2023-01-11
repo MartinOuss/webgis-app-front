@@ -64,7 +64,7 @@ export const Map = (props) => {
   mapRef.current.fitBounds(revBounds);
   
   center = revBounds.getCenter();
-  zoom = 18;
+  zoom = 14;
   console.log({center , bounds, revBounds})
 } else {
  bounds = new L.LatLngBounds([[
@@ -278,7 +278,7 @@ export const Map = (props) => {
 
  
   return (
-    <div className="h-[600px]  w-full md:w-[1400px] border border-black mr-1 text-center">
+    <div className="h-full min-h-[500px] w-full md:w-[1400px] border border-black mr-1 text-center">
       <MapContainer className="min-h-full" center={center} zoom={zoom}  ref={mapRef} bounds={bounds} scrollWheelZoom={false} >
         <TileLayer
           attribution=''
